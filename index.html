@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="he" >
+<head> 
+<title>NTGL</title> 
+<meta name="keywords" content="" /> 
+<meta name="description" content="" /> 
+<meta http-equiv="content-type" content="text/html;charset=windows-1255" /> 
+<link rel="stylesheet" type="text/css" href="http://assets.neo.myregisteredsite.com/plugins/neo.css" /> 
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Lato" />
+<link rel="stylesheet" type="text/css" href="http://www.ntgl2004.net/CSS/main.css" />
+</head>
+<body dir="RTL">
+<?php
+/*  $username = 'admin';
+  $password = 'NT270504!';
+  $LoginOk = false;
+    while (!$LoginOk)
+    {
+      if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))
+      {
+        if ($_SERVER['PHP_AUTH_USER'] == $username && $_SERVER['PHP_AUTH_PW'] == $password)
+          $LoginOk = true;
+      }
+      if (!$LoginOk)
+      {
+        echo("Incorrect combination :name user - password");
+        echo("<br>");
+        header('WWW-Authenticate: Basic realm="Restricted Section"');
+        header('HTTP/1.0 401 Unauthorized');
+        die ("Please enter your username and password");
+      }
+    }
+*/
+?>
+<strong>TITLE</strong>
+<br>
+<div dir="RTL" >
+<ul tabindex="0" dir="RTL" id="menu">
+<li role="menuitem" ><a  href="index.html">Home </a></li>    
+<li role="menuitem" ><a  href="games_one_page.html">GAMES </a></li>    
+<li role="menuitem" ><a  href="movies_one_page.php">MOVIES</a></li>    
+<li role="menuitem" ><a  href="UploadFile_one_page.php">UploadMoviews </a></li>
+<li role="menuitem" ><a  href="forum.html">FORUM </a></li>    
+<li role="menuitem" ><a  href="signup.html">SIGN UP </a></li>   
+</ul>
+</div> 
+
+<div id="section1">
+  <iframe src="movies.php" width="100%" height="100%" ></iframe>
+</div>
+<div id="section2">
+  <iframe src="games.html" width="100%" height="100%" ></iframe>
+</div>
+<div id="section3">
+  <iframe src="UploadFile.php" width="100%" height="100%" ></iframe> 
+</div>
+<div id="section4">
+  <iframe src="forum.html" width="100%" height="100%" ></iframe>
+</div>
+<?php
+  $_SERVER['PHP_AUTH_USER'] = "";
+  $_SERVER['PHP_AUTH_PW']   = "";
+?>
+
+<noscript><img style="position:fixed;" src="http://scorecard.wspisp.net/logger.php?tag=dW5waWQ6MTIxMTgzMjc7Mg%3D%3D" width="1" height="1" alt="alt"></noscript>
+</body>
+</html>
