@@ -1,4 +1,5 @@
 <?php
+error_reporting(E_ALL);    
 $errormsg="";
 $debugerror="";
 $filesizelimit = 50;    
@@ -8,11 +9,16 @@ $fileuploadlimit = $filesizelimit*1024*1024;
 $imageFileType ="";
 $uploadOk = 1;
 $sourceuploadid = 1;
+$errarray =  array();
 
 $filetype = 0;
 
 if(isset($_POST["submit"])) 
 {
+
+   if (isset($_POST["sourceid"]))
+     $sourceuploadid = $_POST["sourceid"];
+
    if (isset($_FILES["fileToUpload"]["name"]))
    {
       $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);   
@@ -20,6 +26,7 @@ if(isset($_POST["submit"]))
       if (file_exists($target_file)) 
       {
          $errormsg =$errormsg. "Sorry, file already exists.";
+         $errarray[] = "Sorry, file already exists.";
          $uploadOk = 2;
       }
    }
@@ -37,6 +44,7 @@ if(isset($_POST["submit"]))
    else
    {
        $errormsg =$errormsg. "Sorry, you have to select file type";
+       //$errarray[] ="Sorry, you have to select file type";
        $uploadOk = 3;      
    }
 
@@ -44,9 +52,10 @@ if(isset($_POST["submit"]))
    if ($_FILES["fileToUpload"]["size"] > $fileuploadlimit) 
    {
       $errormsg =$errormsg. "Sorry, your file is too large.";
+      $errarray[] = "Sorry, your file is too large.";
       $uploadOk = 4;
    }
-
+   
    // Allow certain file formats
    switch($filetype)
    {
@@ -57,6 +66,7 @@ if(isset($_POST["submit"]))
                     strtolower($imageFileType) != "gif" ) 
                   {
                      $errormsg =$errormsg. "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                     $errarray[] ="Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                      $uploadOk = 5;
                   }
              } break;
@@ -64,6 +74,7 @@ if(isset($_POST["submit"]))
                if  (strtolower($imageFileType) != "avi" ) 
                   {
                      $errormsg =$errormsg. "Sorry, only AVI files are allowed.";
+                     $errarray[] = "Sorry, only AVI files are allowed.";
                      $uploadOk = 6;
                   }
              } break;
@@ -71,6 +82,7 @@ if(isset($_POST["submit"]))
                if  (strtolower($imageFileType) != "mp3" ) 
                   {
                      $errormsg =$errormsg. "Sorry, only MP3 files are allowed.";
+                     $errarray[] = "Sorry, only MP3 files are allowed.";
                      $uploadOk = 7;
                   }
              } break;
@@ -78,6 +90,7 @@ if(isset($_POST["submit"]))
                if  (strtolower($imageFileType) != "mov" ) 
                   {
                      $errormsg =$errormsg.  "Sorry, only MOV files are allowed.";
+                     $errarray[] = "Sorry, only MOV files are allowed.";
                      $uploadOk = 8;
                   }
              } break;
@@ -85,16 +98,15 @@ if(isset($_POST["submit"]))
                if  (strtolower($imageFileType) != "mp4" ) 
                   {
                      $errormsg =$errormsg.  "Sorry, only MP4 files are allowed.";
+                     $errarray[] = "Sorry, only MP4 files are allowed.";
                      $uploadOk = 9;
                   }
              } break;
          default:break;
    }
+   
 
-   if (isset($_POST["sourceid"])
-   {
-       $sourceuploadid = $_POST["sourceid"];
-   }
+
 }
 else
   $uploadOk = 0;
@@ -102,7 +114,7 @@ else
 if ($uploadOk == 1)
 {
 // if everything is ok, try to upload file
-    error_reporting(E_ALL);
+
     ini_set('upload_max_filesize', '15M');
     ini_set('post_max_size', '15M');
     ini_set('max_input_time', 300);
@@ -117,17 +129,30 @@ if ($uploadOk == 1)
     $debugerror = $debugerror. "<br>";
 
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) 
-      $errormsg = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+    {
+      $errormsg  = "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+      $errarray[]="The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+    }
     else
+    {
       $errormsg = "Sorry, there was an error uploading your file.";
+      $errarray[]= "Sorry, there was an error uploading your file.";
+    }
 }
 else
 {
     $errormsg =$errormsg.  "Sorry, your file was not uploaded. error code "  . $uploadOk;    
+    $errarray[] = "Sorry, your file was not uploaded. error code "  . $uploadOk; 
 }
-    if (sourceuploadid ==1)
+
+   $errormsg ="";
+   foreach ($errarray as $i => $value)
+   {
+       $errormsg =$errormsg. $errarray[$i]."<br>";
+   }
+    if ($sourceuploadid ==1)
       header('Location:../UploadFile.php?errormsg='.$errormsg, true, 301 );
-    else if (sourceuploadid ==2)
+    else if ($sourceuploadid ==2)
       header('Location:../UploadFile_one_page.php?errormsg='.$errormsg, true, 301 );
     exit($errormsg);
 
